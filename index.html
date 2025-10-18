@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sora 2 - AI Video Generation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+    
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
+                    <path d="M16 8L20 12H18V20H14V12H12L16 8Z" fill="white"/>
+                    <rect x="10" y="22" width="12" height="2" rx="1" fill="white"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#6366f1"/>
+                            <stop offset="100%" stop-color="#8b5cf6"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Sora 2</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#" class="nav-link">Pricing</a>
+                <a href="#" class="nav-link">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="badge">✨ Next Generation AI Video</div>
+                <h1 class="hero-title">
+                    Transform Your Words Into
+                    <span class="gradient-text">Stunning Videos</span>
+                </h1>
+                <p class="hero-description">
+                    Sora 2 uses advanced AI to generate high-quality videos from text descriptions. 
+                    Create anything you can imagine in seconds.
+                </p>
+            </div>
+
+            <div class="generation-panel">
+                <div class="panel-header">
+                    <h2>Generate Your Video</h2>
+                    <div class="credits">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <circle cx="8" cy="8" r="7" stroke="#6366f1" stroke-width="2"/>
+                            <path d="M8 4V8L11 10" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span id="credits">10 credits</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="prompt">Describe your video</label>
+                    <textarea 
+                        id="prompt" 
+                        placeholder="E.g., A serene beach at sunset with waves gently crashing, birds flying overhead, cinematic lighting, 4K quality..."
+                        rows="4"
+                    ></textarea>
+                    <div class="input-footer">
+                        <span class="char-count">
+                            <span id="charCount">0</span>/500
+                        </span>
+                    </div>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="duration">Duration</label>
+                        <select id="duration">
+                            <option value="3">3 seconds</option>
+                            <option value="5" selected>5 seconds</option>
+                            <option value="10">10 seconds</option>
+                            <option value="15">15 seconds</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="quality">Quality</label>
+                        <select id="quality">
+                            <option value="720p">720p</option>
+                            <option value="1080p" selected>1080p</option>
+                            <option value="4k">4K</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="style">Style</label>
+                        <select id="style">
+                            <option value="realistic" selected>Realistic</option>
+                            <option value="cinematic">Cinematic</option>
+                            <option value="anime">Anime</option>
+                            <option value="abstract">Abstract</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="fps">Frame Rate</label>
+                        <select id="fps">
+                            <option value="24">24 FPS</option>
+                            <option value="30" selected>30 FPS</option>
+                            <option value="60">60 FPS</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generateBtn" class="generate-btn">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 3V17M3 10H17" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Generate Video
+                </button>
+
+                <div id="progressContainer" class="progress-container" style="display: none;">
+                    <div class="progress-info">
+                        <span id="progressText">Initializing...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div id="videoResult" class="video-result" style="display: none;">
+                    <video id="generatedVideo" controls></video>
+                    <div class="video-actions">
+                        <button class="action-btn download-btn">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M10 3V13M10 13L6 9M10 13L14 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M3 17H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            Download
+                        </button>
+                        <button class="action-btn share-btn">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <circle cx="15" cy="5" r="2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="5" cy="10" r="2" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="15" cy="15" r="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M7 9L13 6M7 11L13 14" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Share
+                        </button>
+                        <button id="newVideoBtn" class="action-btn primary">
+                            Generate New Video
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery-section">
+            <div class="section-header">
+                <h2>Recent Generations</h2>
+                <p>Explore videos created by our community</p>
+            </div>
+            <div id="galleryGrid" class="gallery-grid">
+                <!-- Gallery items will be added here dynamically -->
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="section-header">
+                <h2>Powerful Features</h2>
+                <p>Everything you need to create amazing videos</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎬</div>
+                    <h3>Cinematic Quality</h3>
+                    <p>Generate professional-grade videos with stunning visual quality and smooth motion</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>State-of-the-art AI generates your videos in seconds, not hours</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Multiple Styles</h3>
+                    <p>Choose from realistic, cinematic, anime, and abstract styles</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Full Control</h3>
+                    <p>Fine-tune duration, quality, frame rate, and more</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Community</h3>
+                    <p>Share your creations and get inspired by others</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Private</h3>
+                    <p>Your creations are private by default with enterprise-grade security</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="32" height="32" rx="8" fill="url(#gradient2)"/>
+                        <path d="M16 8L20 12H18V20H14V12H12L16 8Z" fill="white"/>
+                        <rect x="10" y="22" width="12" height="2" rx="1" fill="white"/>
+                        <defs>
+                            <linearGradient id="gradient2" x1="0" y1="0" x2="32" y2="32">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#8b5cf6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>Sora 2</span>
+                </div>
+                <p class="footer-description">Transform your imagination into reality with AI-powered video generation.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <a href="#">Features</a>
+                <a href="#">Pricing</a>
+                <a href="#">API</a>
+                <a href="#">Documentation</a>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+                <a href="#">Careers</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Security</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Sora 2. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
